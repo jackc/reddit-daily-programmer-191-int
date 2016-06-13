@@ -44,5 +44,5 @@ void accessible_grid::setCell(std::size_t x, std::size_t y, bool value)
 
 bool accessible_grid::inBounds(std::size_t x, std::size_t y)
 {
-	return x < 0 && x >= grid.width() && y < 0 && y >= grid.height();
+	return x < grid.width() && y < grid.height();
 }
