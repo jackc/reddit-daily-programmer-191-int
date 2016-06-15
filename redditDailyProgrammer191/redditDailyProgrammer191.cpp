@@ -24,7 +24,7 @@ int main()
 	for (std::size_t y = 0; y < w.height(); ++y)
 	{
 		for (std::size_t x = 0; x < w.width(); ++x) {
-			std::cout << (ag.is_accessible(x, y) ? ' ' : 'X');
+			std::cout << (ag.getCell(x, y) ? ' ' : 'X');
 		}
 		std::cout << '\n';
 	}

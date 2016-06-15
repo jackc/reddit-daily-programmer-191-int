@@ -10,26 +10,30 @@ template <typename ValT>
 class grid
 {
 public:
-	grid(std::size_t width, std::size_t height, ValT emptyVal);
+	grid(std::size_t width, std::size_t height, ValT defaultVal);
 	virtual ~grid();
 
 	std::size_t width();
 	std::size_t height();
-	virtual ValT getCell(std::size_t x, std::size_t y);
-	virtual void setCell(std::size_t x, std::size_t y, ValT value);
-
+	ValT defaultVal();
+	ValT getCell(std::size_t x, std::size_t y);
+	void setCell(std::size_t x, std::size_t y, ValT value);
 private:
+	bool inBounds(std::size_t x, std::size_t y);
+
 	std::size_t mWidth;
 	std::size_t mHeight;
+	ValT mDefaultVal;
 	std::vector<ValT> cells;
 	std::size_t coordToIdx(std::size_t x, std::size_t y);
 };
 
 template <typename ValT>
-grid<ValT>::grid(std::size_t width, std::size_t height, ValT emptyVal) :
+grid<ValT>::grid(std::size_t width, std::size_t height, ValT defaultVal) :
 	mWidth(width),
 	mHeight(height),
-	cells(width*height, emptyVal)
+	mDefaultVal(defaultVal),
+	cells(width*height, defaultVal)
 {
 }
 
@@ -51,19 +55,39 @@ std::size_t grid<ValT>::height()
 }
 
 template <typename ValT>
+ValT grid<ValT>::defaultVal()
+{
+	return mDefaultVal;
+}
+
+template <typename ValT>
 ValT grid<ValT>::getCell(std::size_t x, std::size_t y)
 {
-	return cells[coordToIdx(x, y)];
+	if (inBounds(x, y)) {
+		return cells[coordToIdx(x, y)];
+	}
+	else {
+		return defaultVal();
+	}
 }
 
 template <typename ValT>
 void grid<ValT>::setCell(std::size_t x, std::size_t y, ValT value)
 {
-	cells[coordToIdx(x, y)] = value;
+	if (inBounds(x, y))
+	{
+		cells[coordToIdx(x, y)] = value;
+	}
 }
 
 template <typename ValT>
 std::size_t grid<ValT>::coordToIdx(std::size_t x, std::size_t y)
 {
 	return y * width() + x;
+}
+
+template <typename ValT>
+bool grid<ValT>::inBounds(std::size_t x, std::size_t y)
+{
+	return x < width() && y < height();
 }
