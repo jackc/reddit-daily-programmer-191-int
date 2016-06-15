@@ -10,10 +10,10 @@ accessible_grid::accessible_grid(world& w) :
 	{
 		for (int x = 0; x < w.width(); ++x)
 		{
-			auto cell = w.getCell(x, y);
+			auto cell = w.getCell({x, y});
 			switch (cell) {
 			case 'A':
-				setCell(x, y, false);
+				setCell({ x, y }, false);
 				break;
 			case 'G':
 				int ymin = std::max(0, y - 1);
@@ -21,11 +21,12 @@ accessible_grid::accessible_grid(world& w) :
 				int xmin = std::max(0, x - 1);
 				int xmax = std::min(w.width() - 1, x + 1);
 
-				for (int sy = ymin; sy <= ymax; ++sy)
+				point p;
+				for (p.y = ymin; p.y <= ymax; ++p.y)
 				{
-					for (int sx = xmin; sx <= xmax; ++sx)
+					for (p.x = xmin; p.x <= xmax; ++p.x)
 					{
-						setCell(sx, sy, false);
+						setCell(p, false);
 					}
 				}
 				break;

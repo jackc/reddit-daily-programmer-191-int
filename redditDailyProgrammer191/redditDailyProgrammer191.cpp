@@ -21,10 +21,10 @@ int main()
 	std::cout << '\n';
 
 	accessible_grid ag(w);
-	for (std::size_t y = 0; y < w.height(); ++y)
+	for (int y = 0; y < w.height(); ++y)
 	{
-		for (std::size_t x = 0; x < w.width(); ++x) {
-			std::cout << (ag.getCell(x, y) ? ' ' : 'X');
+		for (int x = 0; x < w.width(); ++x) {
+			std::cout << (ag.getCell({ x, y }) ? ' ' : 'X');
 		}
 		std::cout << '\n';
 	}
@@ -35,10 +35,10 @@ int main()
 
 void renderWorld(world& w)
 {
-	for(dim y = 0; y < w.height(); ++y)
+	for(int y = 0; y < w.height(); ++y)
 	{
-		for (dim x = 0; x < w.width(); ++x) {
-			std::cout << w.getCell(x, y);
+		for (int x = 0; x < w.width(); ++x) {
+			std::cout << w.getCell({ x, y });
 		}
 		std::cout << '\n';
 	}
@@ -52,16 +52,16 @@ void randomizeWorld(world& w, float asteroidsFraction, float gravityWellsFractio
 
 	std::random_device rndDevice;
 	std::mt19937 eng(rndDevice());
-	std::uniform_int_distribution<dim> widthDist(0, w.width()-1);
-	std::uniform_int_distribution<dim> heightDist(0, w.height() - 1);
+	std::uniform_int_distribution<int> widthDist(0, w.width()-1);
+	std::uniform_int_distribution<int> heightDist(0, w.height() - 1);
 
 	for (std::size_t i = 0; i < asteroidsCount; ++i)
 	{
-		w.setCell(widthDist(eng), heightDist(eng), 'A');
+		w.setCell({ widthDist(eng), heightDist(eng) }, 'A');
 	}
 
 	for (std::size_t i = 0; i < gravityWellsCount; ++i)
 	{
-		w.setCell(widthDist(eng), heightDist(eng), 'G');
+		w.setCell({ widthDist(eng), heightDist(eng) }, 'G');
 	}
 }

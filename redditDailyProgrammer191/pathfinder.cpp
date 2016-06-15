@@ -11,9 +11,13 @@ path findPath(accessible_grid& ag, point start, point dest)
 {
 	path p;
 
+	if (!ag.getCell(start)) {
+		return p;
+	}
+
 	grid<int> costGrid(ag.width(), ag.height(), std::numeric_limits<int>::max());
 
-	costGrid.setCell(start.x, start.y, 0);
+	costGrid.setCell(start, 0);
 
 	std::stack<point> workStack;
 	workStack.push(start);

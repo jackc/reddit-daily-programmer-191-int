@@ -15,17 +15,17 @@ public:
 
 	int width();
 	int height();
-	ValT getCell(int x, int y);
-	ValT getCell(int x, int y, ValT outOfBoundsValue);
-	void setCell(int x, int y, ValT value);
+	ValT getCell(point p);
+	ValT getCell(point p, ValT outOfBoundsValue);
+	void setCell(point p, ValT value);
 
-	bool inBounds(int x, int y);
+	bool inBounds(point p);
 private:
 	int mWidth;
 	int mHeight;
 	ValT mDefaultVal;
 	std::vector<ValT> cells;
-	int coordToIdx(int x, int y);
+	std::size_t coordToIdx(point p);
 };
 
 template <typename ValT>
@@ -54,16 +54,16 @@ int grid<ValT>::height()
 }
 
 template <typename ValT>
-ValT grid<ValT>::getCell(int x, int y)
+ValT grid<ValT>::getCell(point p)
 {
-	return cells[coordToIdx(x, y)];
+	return cells[coordToIdx(p)];
 }
 
 template <typename ValT>
-ValT grid<ValT>::getCell(int x, int y, ValT outOfBoundsValue)
+ValT grid<ValT>::getCell(point p, ValT outOfBoundsValue)
 {
-	if (inBounds(x, y)) {
-		return getCell(x, y);
+	if (inBounds(p)) {
+		return getCell(p);
 	}
 	else {
 		return outOfBoundsValue;
@@ -71,19 +71,19 @@ ValT grid<ValT>::getCell(int x, int y, ValT outOfBoundsValue)
 }
 
 template <typename ValT>
-void grid<ValT>::setCell(int x, int y, ValT value)
+void grid<ValT>::setCell(point p, ValT value)
 {
-	cells[coordToIdx(x, y)] = value;
+	cells[coordToIdx(p)] = value;
 }
 
 template <typename ValT>
-int grid<ValT>::coordToIdx(int x, int y)
+std::size_t grid<ValT>::coordToIdx(point p)
 {
-	return y * width() + x;
+	return p.y * width() + p.x;
 }
 
 template <typename ValT>
-bool grid<ValT>::inBounds(int x, int y)
+bool grid<ValT>::inBounds(point p)
 {
-	return 0 <= x && x < width() && 0 <= y && y < height();
+	return 0 <= p.x && p.x < width() && 0 <= p.y && p.y < height();
 }
