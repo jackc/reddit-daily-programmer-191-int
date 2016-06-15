@@ -1,35 +1,33 @@
 #include "stdafx.h"
 
+#include <algorithm>
 #include "accessible_grid.h"
 
 accessible_grid::accessible_grid(world& w) :
-	grid<bool>(w.width(), w.height(), false)
+	grid<bool>(w.width(), w.height(), true)
 {
-	for (std::size_t y = 0; y < w.height(); ++y)
+	for (int y = 0; y < w.height(); ++y)
 	{
-		for (std::size_t x = 0; x < w.width(); ++x) {
-			setCell(x, y, true);
-		}
-	}
-
-	for (std::size_t y = 0; y < w.height(); ++y)
-	{
-		for (std::size_t x = 0; x < w.width(); ++x) {
+		for (int x = 0; x < w.width(); ++x)
+		{
 			auto cell = w.getCell(x, y);
 			switch (cell) {
 			case 'A':
 				setCell(x, y, false);
 				break;
 			case 'G':
-				setCell(x - 1, y - 1, false);
-				setCell(x, y - 1, false);
-				setCell(x + 1, y - 1, false);
-				setCell(x - 1, y, false);
-				setCell(x, y, false);
-				setCell(x + 1, y, false);
-				setCell(x - 1, y + 1, false);
-				setCell(x, y + 1, false);
-				setCell(x + 1, y + 1, false);
+				int ymin = std::max(0, y - 1);
+				int ymax = std::min(w.height() - 1, y + 1);
+				int xmin = std::max(0, x - 1);
+				int xmax = std::min(w.width() - 1, x + 1);
+
+				for (int sy = ymin; sy <= ymax; ++sy)
+				{
+					for (int sx = xmin; sx <= xmax; ++sx)
+					{
+						setCell(sx, sy, false);
+					}
+				}
 				break;
 			}
 		}

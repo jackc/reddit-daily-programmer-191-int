@@ -6,4 +6,4 @@
 enum direction { Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft };
 using path = std::vector<direction>;
 
-path findPath(grid<dim, bool>& w, point<dim> start, point<dim> dest);
+path findPath(accessible_grid& ag, point start, point dest);
