@@ -1,10 +1,7 @@
 #pragma once
 #include <vector>
 
-struct point {
-	int x;
-	int y;
-};
+#include "point.h"
 
 template <typename ValT>
 class grid

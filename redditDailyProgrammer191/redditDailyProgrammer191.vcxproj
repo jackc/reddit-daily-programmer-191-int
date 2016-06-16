@@ -148,6 +148,8 @@
     <ClInclude Include="accessible_grid.h" />
     <ClInclude Include="grid.h" />
     <ClInclude Include="pathfinder.h" />
+    <ClInclude Include="point.h" />
+    <ClInclude Include="rect.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="world.h" />
@@ -155,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="accessible_grid.cpp" />
     <ClCompile Include="pathfinder.cpp" />
+    <ClCompile Include="rect.cpp" />
     <ClCompile Include="redditDailyProgrammer191.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -8,6 +8,7 @@
 #include "grid.h"
 #include "accessible_grid.h"
 #include "world.h"
+#include "pathfinder.h"
 
 void renderWorld(world& w);
 void randomizeWorld(world& w, float asteroidsFraction, float gravityWellsFraction);
@@ -15,11 +16,13 @@ void randomizeWorld(world& w, float asteroidsFraction, float gravityWellsFractio
 int main()
 {
 	world w(10, 10, '.');
-	randomizeWorld(w, 0.3f, 0.1f);
+	randomizeWorld(w, 0.2f, 0.01f);
+
+	std::cout << "Map" << '\n';
 	renderWorld(w);
 
 	std::cout << '\n';
-
+	std::cout << "Accessability Grid" << '\n';
 	accessible_grid ag(w);
 	for (int y = 0; y < w.height(); ++y)
 	{
@@ -29,6 +32,22 @@ int main()
 		std::cout << '\n';
 	}
 
+	std::cout << '\n';
+
+	auto path = findPath(ag, { 0,0 }, { 9,9 });
+
+	if (path.empty()) {
+		std::cout << "No path found" << '\n';
+	}
+	else {
+		std::cout << "Path" << '\n';
+
+		for (auto& p : path) {
+			w.setCell(p, '#');
+		}
+	}
+
+	renderWorld(w);
 
     return 0;
 }
