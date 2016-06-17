@@ -9,5 +9,5 @@ struct rect
 	int right;
 	int bottom;
 
-	rect::rect(int l, int t, int r, int b);
+	rect(int l, int t, int r, int b);
 };
